@@ -80,19 +80,28 @@ function get_file(number){
 		){}//do not do nothing
 		else{
 			//message received.
-			var nickname = this.responseText.split(': ')[0];	//insert nickname
-			var message = this.responseText.split(': ')[1];		//insert message
+			var nickname = this.responseText.split(': ', 1)[0];				//insert nickname
+			var message = this.responseText.split(nickname+': ', 2)[1];		//insert message
 			
 			//replace link
 			var message = linkify(message);						//change links
 			
 			//display in chat window
 			var code = '<p>'+'<span>'+nickname+'</span>'+message+'</p>';	//add tags to message
-			document.getElementById('chat-area').innerHTML += code;			//display this
-			
+			var old_code = document.getElementById('chat-area').innerHTML;
+			var messages_limit = 1000;
+			old_code = old_code.split("</p>", messages_limit);
+			old_code = old_code.join('');
+			console.log('old_code', old_code);
+			document.getElementById('chat-area').innerHTML = code+old_code;			//display this
+
 			//add sound and play this.
-			$('body').append($('<audio id="chatAudio"><source src="notify.ogg" type="audio/ogg"><source src="notify.mp3" type="audio/mpeg"><source src="notify.wav" type="audio/wav"></audio>'));
-			$('#chatAudio')[0].play();
+			if ($("#chatAudio").length) {
+				$('#chatAudio')[0].play();
+			} else {
+				$('body').append($('<audio id="chatAudio"><source src="notify.ogg" type="audio/ogg"><source src="notify.mp3" type="audio/mpeg"><source src="notify.wav" type="audio/wav"></audio>'));
+				$('#chatAudio')[0].play();
+			}
 				
 			//increment the number
 			number_in_script(number+1);
