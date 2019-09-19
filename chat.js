@@ -87,7 +87,7 @@ function get_file(number){
 			var message = linkify(message);						//change links
 			
 			//display in chat window
-			var code = '<p>'+'<span>'+nickname+'</span>'+message+'</p>';	//add tags to message
+			var code = '<a href="open_text_file.html?url='+url+'" target="_blank"><p>'+'<span>'+nickname+'</span></a>'+message+'</p>';	//add tags to message
 			var old_code = document.getElementById('chat-area').innerHTML;
 			var messages_limit = 1000;
 			old_code = old_code.split("</p>", messages_limit);
@@ -143,7 +143,7 @@ function get_file(number){
 
 		var formData = new FormData();
 		var blob = new Blob([nickname+message], { type: 'plain/text' });
-		formData.append('file', blob,'message.txt');
+		formData.append('file', blob, 'message.txt');
 
 		var request = new XMLHttpRequest();
 		request.open('POST', './Upload_messages');
@@ -168,17 +168,22 @@ function get_file(number){
 			
     		 // watch textarea for release of key press
     		 $('#sendie').keyup(function(e) {	
-    			  if (e.keyCode == 13) { 
-                    var text = $(this).val();
-    				var maxLength = $(this).attr("maxlength");  
-                    var length = text.length; 
-                    // send 
-                    if (length <= maxLength + 1) { 
-    			        save_message_as_file(); //save message as file and upload this to HFS
-						$(this).val("");
-                    } else {
-    					$(this).val(text.substring(0, maxLength));
-    				}	
+    			  if (e.keyCode == 13) {
+					if(!checkbox_button.checked){
+						var text = $(this).val();
+						var maxLength = $(this).attr("maxlength");  
+						var length = text.length; 
+						// send 
+						if (length <= maxLength + 1) { 
+							save_message_as_file(); //save message as file and upload this to HFS
+							$(this).val("");
+						} else {
+							$(this).val(text.substring(0, maxLength));
+						}
+					}
+					//else{
+					//	$(this).val($(this).val()+'\n');		//if this '\n' - not already added, after press Enter.
+					//}
     			  }
              });
     	});

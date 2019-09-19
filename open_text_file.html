@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<meta charset="urf-8">
+	</head>
+	<body>
+		<!-- empty pre tag, by default. This will be contains the text of loaded text-file -->
+		<pre id="txt"></pre>
+<script>
+//This file need to load txt-file, parse this, and show responseText in pre tag.
+//You can also try to open txt file by direct link, but sometimes text encoding is incorrect for this way...
+
+
+//get text file by specified URL
+function show_text_file(url){	//url is extracted as parameter of GET-query
+	console.log('url', url);
+	
+	xhr = new XMLHttpRequest();
+	xhr.open("GET", url);
+	xhr.setRequestHeader('Cache-Control', 'no-cache'); //download messages as files from server, without cache this.
+	xhr.send(); //send XHR query to download file.
+	xhr.onerror = function(number){console.log("error" + xhr.status);}
+	xhr.onload = function(){ //file loaded
+		if(//check status and content
+			this.status === 404 									//if status is 404 (not found code)
+		||	this.responseText.indexOf('<h1>Not found</h1>')!==-1	//or if there is "<h1>Not found</h1>" inside the code.
+		){}//do not do nothing
+		else{
+			document.getElementById("txt").innerHTML = this.responseText;
+			document.getElementById("txt").setAttribute('title', url);
+		}
+	}
+	xhr.upload.onerror = function(number){console.log("error" + xhr.status); }
+}
+
+//extract parameter from GET-query
+function gup( name, url ) {											//name, URL
+    if (!url) url = location.href;									//if url not specified, then try parse main URL
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( url );
+    return results == null ? null : results[1];						//return parameter
+}
+
+//var url = gup('url', 'hxxp://example.com/?url=http://www.example.com/t.html')	//another specified url
+//console.log(url);
+
+var url = gup('url')	//main url in location href
+//console.log(url);		//display this
+show_text_file(url);	//load and display text in <pre>.
+</script>
+
+	</body>
+</html>

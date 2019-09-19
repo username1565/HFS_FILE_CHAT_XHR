@@ -17,10 +17,70 @@
 		<a href="about.html" title="This is an open source!"><h2>HFS FILE CHAT</h2></a>
         <p id="name-area"></p>
         <div id="chat-wrap"><div id="chat-area"></div></div>
+		<center>
+			<font color="ff7ff2">Maximum Length =
+				<a id="maxLength" href="javascript:void(0)" style="display:inline; color: ff7ff2;" onclick="input_max_Length()"></a>
+				<div id="set_maxLength_div" style="display:none;"><input id="set_maxLength_input" type="number" min="0" value="0" style="width: 75px;">&nbsp;<input value="OK" type="button" onclick="set_maxLength()"></div>
+			symbols
+			</font>
+		</center>
+		<center>
+			<font color="ff7ff2" title="Use button to allow '\n' inside textarea.">
+			Use button? <input id="button" name="button" type="checkbox" onclick="show_hide_button();">
+			</font>
+			<input id="send" type="button" onclick="send_message();" style="display:none;" value="Send Message">
+		</center>
+		<br>
         <form id="send-message-area">
             <p id="last_message" style="display:none;"></p>
             <p id="username">Username: </p>
-            <textarea id="sendie" height="auto" rows="10" maxlength="300" placeholder="Type your message and press Enter"></textarea>
+            <textarea id="sendie" height="auto" rows="10" maxlength="3000" placeholder="Type your message and press Enter" onclick="set_maxLength();"></textarea>
         </form>
     </div>
+	
+<script>
+
+//Add changed value of maxLength for textarea and add the button to allow '\n' inside this textarea.
+
+var sendie = document.getElementById('sendie');
+var maxLength = sendie.getAttribute('maxLength');
+var maxLength_div = document.getElementById('maxLength');
+var set_maxLength_div = document.getElementById('set_maxLength_div');
+var set_maxLength_input = document.getElementById('set_maxLength_input');
+var send_button = document.getElementById('send');
+var checkbox_button = document.getElementById('button');
+
+maxLength_div.innerHTML = maxLength;
+
+function input_max_Length(){
+	maxLength_div.style.display = 'none';
+	set_maxLength_div.style.display = 'inline';
+	set_maxLength_input.value = maxLength;
+	
+}
+
+function set_maxLength(){
+	var input_maxLength = set_maxLength_input.value;
+	if(input_maxLength!=0){maxLength = input_maxLength;}
+	else{maxLength = parseInt(maxLength_div.innerHTML);}
+	maxLength_div.innerHTML = maxLength;
+	sendie.setAttribute('maxLength', maxLength);
+	
+	set_maxLength_div.style.display = 'none';
+	maxLength_div.style.display = 'inline';	
+}
+
+function show_hide_button(){
+	if (checkbox_button.checked){
+		send_button.style.display = "block";
+	} else {
+		send_button.style.display = "none";
+	}
+}
+
+function send_message(){	//onclick the button
+	save_message_as_file(); //save message as file and upload this to HFS
+	sendie.value = "";
+}
+</script>
 </body></html>
