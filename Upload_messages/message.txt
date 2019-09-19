@@ -1,0 +1,1 @@
+ADMIN: Welcome to HFS FILE CHAT! This is <a href="about.html">Open Source JS frontend</a>.

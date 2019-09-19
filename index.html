@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <title>HFS FILE CHAT</title>
+    
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+    <script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="chat.js"></script>
+</head>
+
+<body onload='save_username(); setInterval("get_file(message_number)", 1000);'>
+<!--Function with parameter must be a string to correct working setInteval repeats-->
+
+    <div id="page-wrap">
+		<a href="about.html" title="This is an open source!"><h2>HFS FILE CHAT</h2></a>
+        <p id="name-area"></p>
+        <div id="chat-wrap"><div id="chat-area"></div></div>
+        <form id="send-message-area">
+            <p id="last_message" style="display:none;"></p>
+            <p id="username">Username: </p>
+            <textarea id="sendie" height="auto" rows="10" maxlength="300" placeholder="Type your message and press Enter"></textarea>
+        </form>
+    </div>
+</body></html>
