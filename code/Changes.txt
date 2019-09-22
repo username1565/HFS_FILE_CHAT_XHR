@@ -1,6 +1,7 @@
 1.0 - source code of first version, without changes.
+	First my version from this topic: http://rejetto.com/forum/index.php?topic=12119.0
 ________________________________________________________________________________________________________________________
-2.0
+2.0 - second my version from that topic.
 chat.js:
 	- split username once, by ': ', and don't split later.
 	- show only last 1000 messages.
@@ -10,9 +11,13 @@ chat.js:
 	
 That's all changes.
 ________________________________________________________________________________________________________________________
-3.0
+3.0 - third version.
+open_text_file.html
+	- add this file to load txt file, and display text in <pre> tag.
+		Sometimes in some browsers there is incorrect encoding for utf-8 encoded txt-files, when this opened by direct link.
+
 chat.js:
-	- add link to the txt-file with the message on the server, if text displaying incorrectly.
+	- add link to the txt-file with the message on the server, if text displaying incorrectly. Now this opened, with utf-8 encoding, using open_text_file.html
 	- Add two variable with timeouts, and using different timeouts for downloading messages.
 		If message (Not Found, 404) - try after 3000 milliseconds.
 		If message was successfully downloaded - try again after 10 milliseconds.
