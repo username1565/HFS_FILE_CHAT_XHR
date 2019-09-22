@@ -59,6 +59,10 @@ function number_in_script(new_message_number){
 		return replacedText;
 	}
 	
+//timeouts in milliseconds:
+var fast_timeout = 10;			//When message downloaded, try download another, after 0.01 second.
+var slow_timeout = 3000;		//When message not downloaded, try download another, after 2 second.
+
 //get n-th message, where n is a number.
 function get_file(number){
 	if(number===0){
@@ -77,7 +81,9 @@ function get_file(number){
 		if(//check status and content
 			this.status === 404 									//if status is 404 (not found code)
 		||	this.responseText.indexOf('<h1>Not found</h1>')!==-1	//or if there is "<h1>Not found</h1>" inside the code.
-		){}//do not do nothing
+		){
+			setTimeout(function(){get_file(number);}, slow_downloading);		//try to load message again, after 1 second (1000 milliseconds)
+		}
 		else{
 			//message received.
 			var nickname = this.responseText.split(': ', 1)[0];				//insert nickname
@@ -92,7 +98,7 @@ function get_file(number){
 			var messages_limit = 1000;
 			old_code = old_code.split("</p>", messages_limit);
 			old_code = old_code.join('');
-			console.log('old_code', old_code);
+			//console.log('old_code', old_code);
 			document.getElementById('chat-area').innerHTML = code+old_code;			//display this
 
 			//add sound and play this.
@@ -105,8 +111,9 @@ function get_file(number){
 				
 			//increment the number
 			number_in_script(number+1);
-			//try to download next message.
-			get_file(number+1);
+			
+			//and try to download next message, faster - after 100 milliseconds.
+			setTimeout(function(){get_file(number+1);}, fast_downloading);
 		}
 	}
 	xhr.upload.onerror = function(number){console.log("error" + xhr.status); }
