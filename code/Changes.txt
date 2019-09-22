@@ -1,6 +1,6 @@
-1.0. 	- first my version from this topic: http://rejetto.com/forum/index.php?topic=12119.0
+1.0 - source code of first version, without changes.
 ________________________________________________________________________________________________________________________
-2.0		- second my version from that topic.
+2.0
 chat.js:
 	- split username once, by ': ', and don't split later.
 	- show only last 1000 messages.
@@ -10,24 +10,28 @@ chat.js:
 	
 That's all changes.
 ________________________________________________________________________________________________________________________
-3.0		- third version.
-open_text_file.html
-	- add this file to load txt file, and display text in <pre> tag.
-		Sometimes in some browsers there is incorrect encoding for utf-8 encoded txt-files, when this opened by direct link.
-		
+3.0
 chat.js:
-	- add link to the txt-file with the message on the server, if text displaying incorrectly. Now this opened, with utf-8 encoding, using open_text_file.html
+	- add link to the txt-file with the message on the server, if text displaying incorrectly.
+	- Add two variable with timeouts, and using different timeouts for downloading messages.
+		If message (Not Found, 404) - try after 3000 milliseconds.
+		If message was successfully downloaded - try again after 10 milliseconds.
+	- comment showing code message in console.log (used just for test)
 
 index.html:
 	- increase maxlength, to be able to paste the long copy-paste. Now, default value is 3000 symbols, not 300.
 	- add option to change maxLength for textarea, to be able to insert "copy and paste"
 	- add option to enable or disable button. Now '\n' symbol (key Enter), is available inside textarea.
 	- add script with function to working with two previous options.
+	- disable setInterval, and move repeats to timeouts, inside the function in chat.js
 
 about.html:
 	- add link to "Article 19: Right to freedom of opinion and expression" and "The Universal Declaration of Human Rights": http://www.claiminghumanrights.org/udhr_article_19.html#at20
-	
+
 /code/Changes.txt
 /code/HFS_FILE_CHAT_XHR1.0.zip
 /code/HFS_FILE_CHAT_XHR2.0.zip
 	- Add this files there.
+
+/code/recursive_zip/r.zip
+	- Add resursive zip archive as example contains archive with source code in archive with source code.
