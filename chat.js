@@ -82,7 +82,7 @@ function get_file(number){
 			this.status === 404 									//if status is 404 (not found code)
 		||	this.responseText.indexOf('<h1>Not found</h1>')!==-1	//or if there is "<h1>Not found</h1>" inside the code.
 		){
-			setTimeout(function(){get_file(number);}, slow_downloading);		//try to load message again, after 1 second (1000 milliseconds)
+			setTimeout(function(){get_file(number);}, slow_timeout);		//try to load message again, after 1 second (1000 milliseconds)
 		}
 		else{
 			//message received.
@@ -113,7 +113,7 @@ function get_file(number){
 			number_in_script(number+1);
 			
 			//and try to download next message, faster - after 100 milliseconds.
-			setTimeout(function(){get_file(number+1);}, fast_downloading);
+			setTimeout(function(){get_file(number+1);}, fast_timeout);
 		}
 	}
 	xhr.upload.onerror = function(number){console.log("error" + xhr.status); }
