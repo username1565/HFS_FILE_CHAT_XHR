@@ -1,10 +1,37 @@
 <html>
 	<head>
 		<meta charset="urf-8">
+		<link id="style1" rel="stylesheet" type="text/css" href="css/code3.css" />
 	</head>
 	<body>
+<script type='text/javascript'>
+var el = document.getElementById("style1");
+
+function css1() { if (el.href.match("css/code1.css")) {return;}else{el.href = "css/code1.css";} }	//css1
+function css2() { if (el.href.match("css/code2.css")) {return;}else{el.href = "css/code2.css";} }	//css2
+function css3() { if (el.href.match("css/code3.css")) {return;}else{el.href = "css/code3.css";} }	//css3
+function css4() { if (el.href.match("css/code4.css")) {}else{}
+	console.log(url, window.location.href);
+	window.location.href=window.location.href.replace("open_text_file.html", "open_text_file_contenteditable.html");
+}	//css4
+
+
+</script>
 		<!-- empty pre tag, by default. This will be contains the text of loaded text-file -->
-		<pre id="txt"></pre>
+		<div id="url"></div>				<!-- URL for TXT-file on the server -->
+		<div id="user"></div>				<!-- User nickname -->
+		Style: <button type="button" onclick="css1()">blue code</button>
+		<button type="button" onclick="css2()">light zebra</button>
+		<button type="button" onclick="css3()">dark zebra</button>
+		<button type="button" onclick="css4()">contenteditable</button>
+		<br>
+		Message:
+
+		<pre id="txt" class="code"></pre>	<!-- Message source code --> 
+		<br>
+
+		<script src="jquery.min.js"></script><!-- using JQUERY to add the <code> - tag, and split message, by strings -->
+
 <script>
 //This file need to load txt-file, parse this, and show responseText in pre tag.
 //You can also try to open txt file by direct link, but sometimes text encoding is incorrect for this way...
@@ -22,12 +49,23 @@ function show_text_file(url){	//url is extracted as parameter of GET-query
 	xhr.onload = function(){ //file loaded
 		if(//check status and content
 			this.status === 404 									//if status is 404 (not found code)
-		||	this.responseText.indexOf('<h1>Not found</h1>')!==-1	//or if there is "<h1>Not found</h1>" inside the code.
+		||	this.responseText.indexOf('<h1>Not found</h1>')!==-1	//or if there is "< h1 >Not found</ h1 >" inside the code.
 		){}//do not do nothing
 		else{
-			document.getElementById("txt").innerHTML = this.responseText;
-			document.getElementById("txt").setAttribute('title', url);
+			var nickname = this.responseText.split(': ', 1)[0];														//extract the nickname
+			var message = this.responseText.split(nickname+': ', 2)[1];												//extract the message		
+			document.getElementById("url").innerHTML = 'Open the message file: <a href="'+url+'">'+url+'</a>';		//show URL
+			document.getElementById("user").innerHTML = 'Message from: '+nickname;									//show nickname
+			document.getElementById("txt").innerHTML = message;														//add only message
+			document.getElementById("txt").setAttribute('title', "Message from: "+nickname);						//show nickname in title tooltip
 		}
+		
+		//add lines to pre (using JQuery)
+		$("pre").html(
+			function (index, html) {
+				return html.replace(/^(.*)$/mg, "<code><p id=\"text\">$1</p></code>");
+			}
+		);
 	}
 	xhr.upload.onerror = function(number){console.log("error" + xhr.status); }
 }
@@ -47,7 +85,7 @@ function gup( name, url ) {											//name, URL
 
 var url = gup('url')	//main url in location href
 //console.log(url);		//display this
-show_text_file(url);	//load and display text in <pre>.
+show_text_file(url);	//load and display text in < pre >.
 </script>
 
 	</body>

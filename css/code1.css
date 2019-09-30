@@ -1,0 +1,32 @@
+pre {
+  counter-reset: line-numbering;
+  background: #2c3e50;
+  padding: 12px 12px 12px 5px; /*top, right, bottom, left*/
+  color: #ecf0f1;
+  line-height: 100%;
+  overflow: auto;
+}
+pre.code {
+  overflow: auto;
+}
+pre.code:before {
+  counter-reset: listing;
+}
+pre.code code {
+  counter-increment: listing;
+}
+pre.code code::before {
+  content: counter(listing) " ";
+  display: inline-block;
+  width: 3em;         /* doesn't work */
+  height: 1.2em;
+  padding-left: auto; /* doesn't work */
+  margin-left: auto;  /* doesn't work */
+  text-align: right;  /* doesn't work */
+  opacity: 0.5;
+  border-right: 1px solid #999;
+}
+#text {
+	display: inline;
+    padding: 1px 5px 1px 5px; /*top, right, bottom, left*/
+}

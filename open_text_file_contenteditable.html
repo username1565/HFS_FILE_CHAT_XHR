@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+	
+	<meta charset="utf-8" />
+ 	<meta name="viewport" content="width=device-width" />
+
+	<title>Open txt-file as UTF-encoded text</title>
+	<!-- Source code: http://jspro.brothercake.com/code-examples/principle6.html + modified... --> 
+	
+	<script type="text/javascript">
+	(function()
+	{
+		for(var tags = ['main','figure','figcaption'], i = 0; i < tags.length; i ++)
+		{
+			document.createElement(tags[i]); //create tags
+		}
+	})();
+	</script>
+
+	<style type="text/css">
+	html, body
+	{
+		margin:0;
+		padding:0;
+		
+		background:#f5f5f5;
+		color:#444;
+		
+		font:normal normal normal 100%/1.4 georgia, serif;
+	}
+	main
+	{
+		display:block;
+		
+		/*width:55%;*/
+		min-width:18em;
+		margin:1em auto;
+		overflow: auto;
+	}
+
+	figure
+	{
+		display:block;
+		
+		margin:1em 1em;
+
+		border:1px solid #ccc;
+		border-radius:3px;
+
+		background:#eee;
+	}
+	
+	figure figcaption
+	{
+		display:block;
+		
+		padding:5px 10px 5px 10px;
+
+		border-bottom:1px solid #ccc;
+		border-radius:3px 3px 0 0;
+		
+		font-weight:bold;
+		
+		background:#ddd;
+		color:#777;
+	}
+
+	pre, pre *
+	{
+		font:normal normal normal 1em/1.4 monaco, courier, monospace;
+		overflow: auto;
+	}
+	pre
+	{
+		font-size:0.8em;
+	}
+	pre, pre code, pre samp
+	{
+		display:block;
+		margin:0;
+		
+		cursor:text;
+	}
+	pre code, pre samp
+	{
+		/* enforce white-space for IE7 */
+		white-space:pre;
+		
+		/* enforce word-wrap for mobile safari */
+		word-wrap:normal;
+		
+		/*padding: 10px;*/
+		padding: 1.4em 0.75em 2.8em 0.75em; /*top, right, bottom, left*/
+
+		-moz-tab-size:4;
+		-o-tab-size:4;
+		tab-size:4;
+		
+		overflow-x:auto;
+	}
+	
+	/* additional focus rules to provide a visual cue */
+	pre [contenteditable]:focus
+	{
+		border-radius:0 0 3px 0;
+
+		background:#fff;
+		
+		outline:none;
+
+		box-shadow:inset 0 1px 4px 1px rgba(0,0,0,0.5);
+		
+		overflow: auto;
+	}
+
+	pre.line-numbers
+	{
+		position:relative;
+	}
+	pre.line-numbers code, 
+	pre.line-numbers samp
+	{
+		margin-left:3em;
+		
+		border-left:1px solid #ccc;
+	}
+
+	pre.line-numbers > div
+	{
+		display:block;
+		
+		position:absolute;
+		top:0;
+		left:0;
+		
+		height:100%;
+
+		border-radius:0 0 0 3px;
+		
+		background:#505050;
+
+		color:#eee;
+		opacity: 0.5;
+		
+		overflow:hidden;
+
+		counter-reset:line;
+	}
+	
+	pre.line-numbers > div > span
+	{
+		display:block;
+		width:2.5em;
+		padding:0 0.5em 0 0;
+		
+		text-align:right;
+
+		overflow:hidden;
+		
+		counter-increment:line;
+	}
+	pre.line-numbers > div > span::before
+	{
+		content:counter(line);
+	}
+	pre.line-numbers > div > span:first-child
+	{
+		margin-top: 1.4em;
+	}
+	pre.line-numbers > div > span:nth-child(odd)
+	{
+		background:#eee;
+		color:#505050;
+		/*opacity: 0.5;*/
+	}
+	
+	@media print
+	{
+		pre code
+		{
+			overflow-x:visible;
+			white-space:pre-wrap;
+		}
+		pre.line-numbers div
+		{
+			display:none;
+		}
+		pre.line-numbers > code, 
+		pre.line-numbers > samp
+		{
+			margin-left:0;
+		}
+	}
+	/* double-up the syntax elements for cross-browser RTF-keystroke support */
+	pre b, pre strong
+	{
+		font-weight:normal;
+		color:#039;
+	}
+	pre u, pre u b, pre u strong
+	{
+		text-decoration:none;
+		color:#083;
+	}
+	pre i, pre em, pre i *, pre em *, pre i * *, pre em * *
+	{
+		letter-spacing:-0.1em;
+		text-decoration:none;
+		font-style:normal;
+		color:#c55;
+	}
+	b{
+		color: green;
+	}
+	</style>
+
+</head>
+<body>
+<script type='text/javascript'>
+var el = document.getElementById("style1");
+
+function css123() {
+	console.log(url, window.location.href);
+	window.location.href=window.location.href.replace("open_text_file_contenteditable.html", "open_text_file.html");
+}	//css123 - back to 3 previous styles
+</script>
+	<main>
+		<figure>
+			<p id="example1-description">
+				<div id="url"></div>				<!-- URL for TXT-file on the server -->
+				<div id="user"></div>				<!-- User nickname -->
+				Style: <button type="button" onclick="css123()">back to previous styles</button>
+			</p>
+			<figcaption id="example1-caption">Message text:</figcaption>
+
+			<!-- empty pre tag, by default. This will be contains the text of loaded text-file -->
+			<pre
+				aria-describedby="example1-description"
+				aria-labelledby="example1-caption"
+			><!--code tag will contains code of txt-file--><code
+				contenteditable="false"
+				tabindex="0"
+				spellcheck="false"
+				id="txt"
+			></code><!-- Message source code --></pre> 
+			<br>
+		</figure>
+	</main>
+
+<script>
+//This file need to load txt-file, parse this, and show responseText in pre tag.
+//You can also try to open txt file by direct link, but sometimes text encoding is incorrect for this way...
+
+
+//get text file by specified URL
+function show_text_file(url){	//url is extracted as parameter of GET-query
+	console.log('url', url);
+	
+	xhr = new XMLHttpRequest();
+	xhr.open("GET", url);
+	xhr.setRequestHeader('Cache-Control', 'no-cache'); //download messages as files from server, without cache this.
+	xhr.send(); //send XHR query to download file.
+	xhr.onerror = function(number){console.log("error" + xhr.status);}
+	xhr.onload = function(){ //file loaded
+		if(//check status and content
+			this.status === 404 									//if status is 404 (not found code)
+		||	this.responseText.indexOf('<h1>Not found</h1>')!==-1	//or if there is "< h1 >Not found</ h1 >" inside the code.
+		){}//do not do nothing
+		else{
+			var nickname = this.responseText.split(': ', 1)[0];														//extract the nickname
+			var message = this.responseText.split(nickname+': ', 2)[1];												//extract the message		
+			document.getElementById("url").innerHTML = 'Open the message text-file: <a href="'+url+'">'+url+'</a>';		//show URL
+			document.getElementById("user").innerHTML = 'Message from: <b>'+nickname+'</b>';									//show nickname
+			document.getElementById("txt").innerHTML = message;														//add only message
+			document.getElementById("txt").setAttribute('title', "Message from: "+nickname);						//show nickname in title tooltip
+		}
+		
+//numerate the lines in code-tag:	
+(function()
+	{
+		if(typeof(window.getComputedStyle) == 'undefined') 
+		{ 
+			return; 
+		}
+		
+		var pre = document.getElementsByTagName('pre');
+		
+		for(var len = pre.length, i = 0; i < len; i ++)
+		{
+			var code = pre[i].getElementsByTagName('code').item(0);
+			if(!code)
+			{
+				code = pre[i].getElementsByTagName('samp').item(0);
+				if(!code)
+				{
+					continue;
+				}
+			}
+			
+			var column = document.createElement('div');
+			column.setAttribute('aria-hidden', 'true');
+			
+			for(var n = 0; n < code.innerHTML.split(/[\n\r]/g).length; n ++)
+			{
+				column.appendChild(document.createElement('span'));
+			}
+			
+			pre[i].insertBefore(column, code);
+			pre[i].className = 'line-numbers';
+		}	
+	
+	})();//end numerate lines
+	
+	}//end xhr.onload
+	xhr.upload.onerror = function(number){console.log("error" + xhr.status); }
+}
+
+//extract parameter from GET-query
+function gup( name, url ) {											//name, URL
+    if (!url) url = location.href;									//if url not specified, then try parse main URL
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( url );
+    return results == null ? null : results[1];						//return parameter
+}
+
+//var url = gup('url', 'hxxp://example.com/?url=http://www.example.com/t.html')	//another specified url
+//console.log(url);
+
+var url = gup('url')	//main url in location href
+//console.log(url);		//display this
+show_text_file(url);	//load and display text in < pre >.
+</script>
+
+	</body>
+</html>

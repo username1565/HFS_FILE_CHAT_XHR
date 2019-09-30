@@ -16,6 +16,14 @@ open_text_file.html
 	- add this file to load txt file, and display text in <pre> tag.
 		Sometimes in some browsers there is incorrect encoding for utf-8 encoded txt-files, when this opened by direct link.
 
+/css/css1.css - add style for blue code in pre-tag, with numering lines.
+/css/css2.css - add style for light zebra code in pre-tag, with numering lines.
+/css/css3.css - add style for dark zebra code in pre-tag, with numering lines.
+
+open_text_file_contenteditable.html
+	- add code in contenteditable div, with numering lines.
+	Source code - here: http://jspro.brothercake.com/code-examples/principle6.html
+
 chat.js:
 	- add link to the txt-file with the message on the server, if text displaying incorrectly. Now this opened, with utf-8 encoding, using open_text_file.html
 	- Add two variable with timeouts, and using different timeouts for downloading messages.
